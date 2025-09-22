@@ -23,25 +23,36 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-u7d*hudfq)+f2v+c8u35jf6!ksjkvk22o!kiryqa%1y!_rc8kf'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True # False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS =[] #['*'] # A changé pour la partie Prod
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'drf_yasg',
+    'unfold',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'rest_framework_simplejwt',
+    'users',
+    'producers',
+    'products',
+    'clients',
+    'subscriptions',
+    'notifications',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -80,6 +91,25 @@ DATABASES = {
 }
 
 
+UNFOLD = {
+    "SITE_TITLE": "KleerInfini Admin",
+    "SITE_HEADER": "KleerInfini B2B Platform",
+    "SIDEBAR": {
+        "SHOW_ICONS": True,
+        "COLLAPSE": False,  # ou True pour un sidebar rétractable
+        "WIDTH": 280,       # largeur en pixels
+        "BACKGROUND_COLOR": "#1a202c",  # couleur de fond
+        "ACTIVE_COLOR": "#2563eb",      # couleur de l’item actif
+        "TEXT_COLOR": "#fff",           # couleur du texte
+    },
+    "THEME": {
+        "PRIMARY_COLOR": "#2563eb",
+        "ACCENT_COLOR": "#f59e42",
+        "DARK_MODE": True,
+    },
+    # ... d’autres options disponibles
+}
+
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
@@ -98,11 +128,21 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = 'users.User'
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'fr'
+
+LANGUAGES = [
+    ('fr', 'Français'),
+    ('en', 'English'),
+    ('ar', 'العربية'),
+]
+
+LOCALE_PATHS = [ BASE_DIR / 'locales' ]
 
 TIME_ZONE = 'UTC'
 
@@ -121,7 +161,12 @@ STATICFILES_DIRS = [ BASE_DIR / "static" ]
 
 TEMPLATES[0]['DIRS'] = [ BASE_DIR / 'templates' ]
 
-
+# Celery configuration
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
 
 
 # Default primary key field type

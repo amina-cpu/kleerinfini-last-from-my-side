@@ -2,7 +2,9 @@ import React, { useEffect, useState, useRef } from "react";
 import { Users, Globe, Package, Map } from "lucide-react";
 import first from "../assets/first.mp4";
 import second from "../assets/second.mp4";
-import labo from "../assets/labo.jpeg";
+import labo from "../assets/labo1.jpeg";
+
+import alg from "../assets/alg.mp4";
 
 export default function HeroSection() {
   const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
@@ -12,7 +14,7 @@ export default function HeroSection() {
 
 
   const mediaItems = [
-    { type: "image", src: labo, alt: "Labo", duration: 3000 },
+    { type: "video", src: alg, alt: "alg", duration: 2000 },
     { type: "video", src: first, alt: "First Video" },
     { type: "video", src: second, alt: "Second Video" },
   ];
@@ -41,23 +43,24 @@ export default function HeroSection() {
 
   useEffect(() => {
     console.log('Effect running for index:', currentMediaIndex, 'Type:', currentMedia.type, 'Alt:', currentMedia.alt);
-    
+
     clearExistingTimeout();
 
-    if (currentMedia.type === "image") {
-      console.log('Setting timeout for image:', currentMedia.alt, 'Duration:', currentMedia.duration);
+    if (currentMedia.type === "image" || currentMedia.duration) {
+      const duration = currentMedia.duration || 3000;
+      console.log('Setting timeout for video with custom duration:', currentMedia.alt, 'Duration:', duration);
       timeoutRef.current = setTimeout(() => {
-        console.log('Image timeout triggered for:', currentMedia.alt);
+        console.log('Video timeout triggered for:', currentMedia.alt);
         goToNextMedia();
-      }, currentMedia.duration || 3000);
+      }, duration);
     } else if (currentMedia.type === "video") {
       console.log('Setting up video:', currentMedia.alt);
-      
+
       const setupVideo = () => {
         if (videoRef.current) {
           const video = videoRef.current;
           console.log('Video element ready for:', currentMedia.alt);
-          
+
           const handleVideoError = (e) => {
             console.log('Video error for:', currentMedia.alt, e);
             setCurrentMediaIndex((prev) => {
@@ -66,7 +69,7 @@ export default function HeroSection() {
               return nextIndex;
             });
           };
-          
+
           const handleVideoEnded = () => {
             console.log('Video ended:', currentMedia.alt);
             setCurrentMediaIndex((prev) => {
@@ -75,13 +78,13 @@ export default function HeroSection() {
               return nextIndex;
             });
           };
-          
+
           video.onended = null;
           video.onerror = null;
-          
+
           video.onended = handleVideoEnded;
           video.onerror = handleVideoError;
-          
+
           video.currentTime = 0;
           video.play().then(() => {
             console.log('Video started playing:', currentMedia.alt);
@@ -97,7 +100,7 @@ export default function HeroSection() {
           });
         }
       };
-      
+
       setTimeout(setupVideo, 100);
     }
 
@@ -142,15 +145,15 @@ export default function HeroSection() {
         )}
       </div>
 
-      <div className="relative z-10 px-6">
+      <div className="relative z-10 px-6 mt-20">
         <h1 className="text-3xl font-bold mb-4">
           Connectez-vous aux meilleurs producteurs algériens
         </h1>
         <p className="text-xl mb-6">
           Plateforme B2B innovante pour des opportunités mondiales
         </p>
-        
-   
+
+
         <div className="flex flex-wrap justify-center gap-8 mb-8">
           <div className="flex items-center gap-2">
             <Users className="w-5 h-5 text-orange-500" />

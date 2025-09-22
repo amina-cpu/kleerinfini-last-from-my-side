@@ -17,7 +17,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
           {/* Logo & Description */}
           <div>
-            <h3 className="text-2xl font-extrabold mb-4 text-white">AlgerExport</h3>
+            <h3 className="text-2xl font-extrabold mb-4 text-white">Kleer Infini</h3>
             <p className="text-gray-300 mb-4">
               La plateforme pour importer ou exporter facilement depuis l'Algérie.
             </p>
@@ -80,7 +80,7 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="border-t border-gray-700 pt-6 flex flex-col md:flex-row justify-between items-center">
           <p className="text-sm text-gray-400">
-            © 2024 AlgerExport. Tous droits réservés.
+            © 2024 Kleer Infini. Tous droits réservés.
           </p>
           <div className="flex gap-6 mt-4 md:mt-0">
             <a href="#" className="text-gray-300 hover:text-orange-500 text-sm transition">
